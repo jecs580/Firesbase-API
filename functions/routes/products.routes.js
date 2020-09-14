@@ -2,7 +2,8 @@ const { Router } = require('express');
 const router= Router();
 const admin= require('firebase-admin');
 admin.initializeApp({
-    credential:admin.credential.cert('./permissions.json'),
+    credential:admin.credential.cert('./permissions.json'), // Para pruebas locales
+    // credential:admin.credential.applicationDefault(), // Para hacer el deploy
     databaseURL:'https://fir-api-aa208.firebaseio.com',
 })
 const db = admin.firestore();
