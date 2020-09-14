@@ -54,6 +54,30 @@ app.get('/api/products', async (req,res)=>{
     }
 })
 
+app.delete('/api/products/:id',async (req,res)=>{
+    try {
+        const doc = db.collection('products').doc(req.params.id);
+        await doc.delete();
+        return res.status(200).json()
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(error);
+    }
+})
+
+app.put('/api/products/:id', async (req,res)=>{
+    try {
+        const doc = db.collection('products').doc(req.params.id);
+        await doc.update({name:req.body.name});
+        const item = await doc.get();
+        const response = item.data();
+        return res.status(200).json(response);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(error);
+    }
+})
+
 exports.app = functions.https.onRequest(app);  // Especificamos que nuestro backend sera ejecutado desde Firebase
 
 
